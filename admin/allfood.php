@@ -11,9 +11,25 @@
     $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
     $limit = 20;
     $skip = ($page - 1) * $limit;
-    $search = isset($_GET['search']) ? $_GET['search'] : '';
-    $url = 'menu-detail/ingre-name?username=cheasel&api_key=fe1913c8bddda7fbf1b050c92949ef887c97369bb965bc866bcbc9c15d65154e&name='.urlencode($search).'&skip='.$skip.'&limit='.$limit;
-    $resultmenu = json_decode(getAPI($url),true);
+    if(isset($_POST['min-cal'])){
+        $ingredients = array();
+        if(isset($_POST['ingredient'])){
+            for($i=0; $i < count($_POST['ingredient']); $i++) {
+                array_push($ingredients, $_POST['ingredient'][$i]);
+            }
+        }
+        $data_array =  array(
+            "mincal" => $_POST['min-cal'],
+            "maxcal" => $_POST['max-cal'],
+            "name" => $ingredients
+        );
+        $url = 'menu-detail/advance-search?username=cheasel&api_key=fe1913c8bddda7fbf1b050c92949ef887c97369bb965bc866bcbc9c15d65154e&skip='.$skip.'&limit='.$limit;
+        $resultmenu = json_decode(postAPI($url,json_encode($data_array, true)),true);
+    }else{
+        $search = isset($_GET['search']) ? $_GET['search'] : '';
+        $url = 'menu-detail/ingre-name?username=cheasel&api_key=fe1913c8bddda7fbf1b050c92949ef887c97369bb965bc866bcbc9c15d65154e&name='.urlencode($search).'&skip='.$skip.'&limit='.$limit;
+        $resultmenu = json_decode(getAPI($url),true);
+    }
 ?>
 
 <!DOCTYPE html>
@@ -150,41 +166,41 @@
                                     <div class="col-12">
                                         <h6>ADVANCE SEARCH</h6>
                                     </div>
-                                    <form action="">
+                                    <form action="allfood.php" method="POST">
                                         <div class="row">
                                             <div class="col-6 form-group">
                                                 <label class="col-12">min calories</label>
                                                 <div class="col-8">
-                                                    <input type="text" name="min-cal" placeholder="0" class="form-control form-control-line" style="min-height: 20px; font-size: 14px;">
+                                                    <input type="text" name="min-cal" placeholder="0" value="0" class="form-control form-control-line" style="min-height: 20px; font-size: 14px;">
                                                 </div>
                                             </div>
                                             <div class="col-6 form-group">
                                                 <label class="col-12">max calories</label>
                                                 <div class="col-8">
-                                                    <input type="text" name="max-cal" placeholder="0" class="form-control form-control-line" style="min-height: 20px; font-size: 14px;">
+                                                    <input type="text" name="max-cal" placeholder="9999" value="9999" class="form-control form-control-line" style="min-height: 20px; font-size: 14px;">
                                                 </div>
                                             </div>
                                             <label class="col-12" style="padding-left:28px;">ingredients</label>
                                             <div class="col-1">
                                             </div>
                                             <div class="col-2">
-                                                <input type="checkbox" id="ingredient1" name="ingredient1" value="หมู">
+                                                <input type="checkbox" id="ingredient1" name='ingredient[]' value="หมู">
                                                 <label for="ingredient1"> หมู</label>
                                             </div>
                                             <div class="col-2">
-                                                <input type="checkbox" id="ingredient2" name="ingredient2" value="ไก่">
+                                                <input type="checkbox" id="ingredient2" name="ingredient[]" value="ไก่">
                                                 <label for="ingredient2"> ไก่</label>
                                             </div>
                                             <div class="col-2">
-                                                <input type="checkbox" id="ingredient3" name="ingredient3" value="กุ้ง">
+                                                <input type="checkbox" id="ingredient3" name="ingredient[]" value="กุ้ง">
                                                 <label for="ingredient3"> กุ้ง</label>
                                             </div>
                                             <div class="col-2">
-                                                <input type="checkbox" id="ingredient4" name="ingredient4" value="ปลาหมึก">
+                                                <input type="checkbox" id="ingredient4" name="ingredient[]" value="ปลาหมึก">
                                                 <label for="ingredient4"> ปลาหมึก</label>
                                             </div>
                                             <div class="col-2">
-                                                <input type="checkbox" id="ingredient5" name="ingredient5" value="ปลา">
+                                                <input type="checkbox" id="ingredient5" name="ingredient[]" value="ปลา">
                                                 <label for="ingredient5"> ปลา</label>
                                             </div>
                                             <div class="col-1">
@@ -192,7 +208,7 @@
                                             <div class="col-1">
                                             </div>
                                             <div class="col-2">
-                                                <input type="checkbox" id="ingredient6" name="ingredient6" value="ไข่">
+                                                <input type="checkbox" id="ingredient6" name="ingredient[]" value="ไข่">
                                                 <label for="ingredient6"> ไข่</label>
                                             </div>
                                             <div class="col-12">
@@ -235,7 +251,7 @@
                                             } ?>
                                         </tbody>
                                     </table>
-                                    <?php include('../function/pagination.php');?>
+                                    <?php #include('../function/pagination.php');?>
                                 </div>
                             </div>
                         </div>
