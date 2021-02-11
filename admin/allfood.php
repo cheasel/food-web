@@ -1,21 +1,20 @@
 <?php
-session_start();
-include '../main/connectAPI.php';
-if (isset($_SESSION['id'])) {
-    $session_login_id = $_SESSION['id'];
-    $session_login_email = $_SESSION['email'];
-    #$sqlmenu = "SELECT * FROM user INNER JOIN menu ON user.id=menu.user_id";
-    #$resultmenu = mysqli_query($conn, $sqlmenu);
-}
+    session_start();
+    include '../main/connectAPI.php';
+    if (isset($_SESSION['id'])) {
+        $session_login_id = $_SESSION['id'];
+        $session_login_email = $_SESSION['email'];
+        $session_login_username = $_SESSION['username'];
+        $session_login_status = $_SESSION['status'];
+    }
 
-$page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
-$limit = 20;
-$skip = ($page - 1) * $limit;
-$search = '';
-$url = 'menu-detail/limit-menu?username=cheasel&api_key=fe1913c8bddda7fbf1b050c92949ef887c97369bb965bc866bcbc9c15d65154e&name=&skip='.$skip.'&limit='.$limit;
-$resultmenu = json_decode(getAPI($url),true);
+    $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+    $limit = 20;
+    $skip = ($page - 1) * $limit;
+    $search = isset($_GET['search']) ? $_GET['search'] : '';
+    $url = 'menu-detail/ingre-name?username=cheasel&api_key=fe1913c8bddda7fbf1b050c92949ef887c97369bb965bc866bcbc9c15d65154e&name='.urlencode($search).'&skip='.$skip.'&limit='.$limit;
+    $resultmenu = json_decode(getAPI($url),true);
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -61,8 +60,8 @@ $resultmenu = json_decode(getAPI($url),true);
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="mainstyle/jquery/jquery.min.js"></script>
-    <script src="mainstyle/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../mainstyle/jquery/jquery.min.js"></script>
+    <script src="../mainstyle/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <script src="../assets/node_modules/jquery/jquery.min.js"></script>
     <!-- Bootstrap popper Core JavaScript -->
@@ -91,6 +90,8 @@ $resultmenu = json_decode(getAPI($url),true);
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+    <link href="../css/show-food.css" rel="stylesheet">
 </head>
 
 <body class="fix-header fix-sidebar card-no-border">
@@ -128,15 +129,88 @@ $resultmenu = json_decode(getAPI($url),true);
                     <!-- column -->
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Recipe</h4>
-                                <h6 class="card-subtitle">Manage Recipe</h6>
-                                <div class="table-responsive">
+                            <div class="card-body row">
+                                <div class="col-8">
+                                    <h4 class="card-title">Recipe</h4>
+                                    <h6 class="card-subtitle">Manage Recipe</h6>
+                                </div>
+                                <div class="col-4 admin-search-container">
+                                    <form action="allfood.php">
+                                        <div class='admin-search'>
+                                            <i class="fa fa-search"></i>
+                                            <input style="width: 75%;" type="text" placeholder="ค้นหาจากชื่อเมนู, วัตถุดิบ" name="search">
+                                            <button type="button" id="filter-but"><i class="fa fa-filter"></i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-12 table-responsive" style="margin: 5px 10px 5px 10px; display:none;" id="filter-box">
+                                    <div class="col-12" style="padding-left: 0; font-size: 1.1rem;">
+                                        <i class="fa fa-times" id="close-filter"></i>
+                                    </div>
+                                    <div class="col-12">
+                                        <h6>ADVANCE SEARCH</h6>
+                                    </div>
+                                    <form action="">
+                                        <div class="row">
+                                            <div class="col-6 form-group">
+                                                <label class="col-12">min calories</label>
+                                                <div class="col-8">
+                                                    <input type="text" name="min-cal" placeholder="0" class="form-control form-control-line" style="min-height: 20px; font-size: 14px;">
+                                                </div>
+                                            </div>
+                                            <div class="col-6 form-group">
+                                                <label class="col-12">max calories</label>
+                                                <div class="col-8">
+                                                    <input type="text" name="max-cal" placeholder="0" class="form-control form-control-line" style="min-height: 20px; font-size: 14px;">
+                                                </div>
+                                            </div>
+                                            <label class="col-12" style="padding-left:28px;">ingredients</label>
+                                            <div class="col-1">
+                                            </div>
+                                            <div class="col-2">
+                                                <input type="checkbox" id="ingredient1" name="ingredient1" value="หมู">
+                                                <label for="ingredient1"> หมู</label>
+                                            </div>
+                                            <div class="col-2">
+                                                <input type="checkbox" id="ingredient2" name="ingredient2" value="ไก่">
+                                                <label for="ingredient2"> ไก่</label>
+                                            </div>
+                                            <div class="col-2">
+                                                <input type="checkbox" id="ingredient3" name="ingredient3" value="กุ้ง">
+                                                <label for="ingredient3"> กุ้ง</label>
+                                            </div>
+                                            <div class="col-2">
+                                                <input type="checkbox" id="ingredient4" name="ingredient4" value="ปลาหมึก">
+                                                <label for="ingredient4"> ปลาหมึก</label>
+                                            </div>
+                                            <div class="col-2">
+                                                <input type="checkbox" id="ingredient5" name="ingredient5" value="ปลา">
+                                                <label for="ingredient5"> ปลา</label>
+                                            </div>
+                                            <div class="col-1">
+                                            </div>
+                                            <div class="col-1">
+                                            </div>
+                                            <div class="col-2">
+                                                <input type="checkbox" id="ingredient6" name="ingredient6" value="ไข่">
+                                                <label for="ingredient6"> ไข่</label>
+                                            </div>
+                                            <div class="col-12">
+                                                <center>
+                                                    <input type="reset"></input>
+                                                    <input type="submit"></input>
+                                                </center>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-12 table-responsive">
                                     <table class="table">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
                                                 <th>Name</th>
+                                                <th>Calories (kcal)</th>
                                                 <th>Date Add</th>
                                                 <th>Option</th>
                                             </tr>
@@ -150,20 +224,19 @@ $resultmenu = json_decode(getAPI($url),true);
                                                     <td>
                                                         <h6><?php echo $row["title"]; ?></h6>
                                                     </td>
+                                                    <td><?php echo number_format((float)$row['nutrition']['calories']['quantity']/$row['serve'], 2, '.', ''); ?></td>
                                                     <td><?php echo date('m/d/Y H:i:s', (int) ((int)$row["date_add"]['$date'] / 1000)); ?></td>
-                                                        <td>
-                                                            <a href="<?php echo '../main/edit-food.php?id='. $row["_id"] ?>"><i class="fa fa-pencil-square-o text-success mr-3" style="font-size: 1.25rem;"></i></a>
-                                                            <a href="#exampleModal" data-toggle="modal" data-id="<?php echo $row["_id"] ?>" class="open-modal"><i class="fa fa-trash-o text-danger" style="font-size: 1.25rem;"></i></a>
-                                                        </td> 
+                                                    <td>
+                                                        <a href="<?php echo '../main/edit-food.php?id='. $row["_id"] ?>"><i class="fa fa-pencil-square-o text-success mr-3" style="font-size: 1.25rem;"></i></a>
+                                                        <a href="#exampleModal" data-toggle="modal" data-id="<?php echo $row["_id"] ?>" class="open-modal"><i class="fa fa-trash-o text-danger" style="font-size: 1.25rem;"></i></a>
                                                     </td>
                                                 </tr>
                                                 <?php $i++;
                                             } ?>
-
                                         </tbody>
                                     </table>
+                                    <?php include('../function/pagination.php');?>
                                 </div>
-                                <?php include('../function/pagination.php');?>
                             </div>
                         </div>
                     </div>
@@ -207,6 +280,16 @@ $resultmenu = json_decode(getAPI($url),true);
             var foodId = $(this).data('id');
             $("#foodId").val( foodId );
         });
+
+        // filter-box toggle
+        $("#filter-but").click(function(){
+            $("#filter-box").toggle();
+        });
+
+        // close-filter button 
+        $("#close-filter").click(function(){
+            $("#filter-box").hide();
+        });
     </script>
 
     <!-- Modal -->
@@ -225,6 +308,7 @@ $resultmenu = json_decode(getAPI($url),true);
         <div class="modal-footer">
             <form action="../function/delete-food.php" method="POST">
                 <input type="hidden" name="foodId" id="foodId" value=""/>
+                <input type="hidden" name="status" id="status" value="<?php echo $session_login_status ?>"/>
                 <button type="button" class="btn btn-info" data-dismiss="modal">Cancle</button>
                 <button type="submit" class="btn btn-danger">Delete</button>
             </form>

@@ -5,7 +5,7 @@
 <header class="topbar">
     <nav class="navbar top-navbar navbar-expand-md navbar-light">
         <div class="navbar-header">
-            <a class="navbar-brand" href="../show-food.php">
+            <a class="navbar-brand" href="../index.php">
                 <!-- Logo icon --><b>
                     <!-- Dark Logo icon -->
                     <img src="../assets/images/logo-icon-api.png" alt="homepage" class="dark-logo" />

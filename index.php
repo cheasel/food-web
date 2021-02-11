@@ -61,14 +61,20 @@
 </head>
 
 <body>
+    <!-- loading -->
+    <!--<div class="preloader">
+        <div class="loader">
+            <div class="loader__figure"></div>
+            <p class="loader__label">Sharing Thai Food</p>
+        </div>
+    </div>-->
+
     <!-- Navigation -->
     <?php include("function/navigation.php"); ?>
 
     <!-- Masthead -->
-
-
     <div class='search-container'>
-        <form action="/projectapi/index.php">
+        <form action="index.php">
             <div class='search'>
                 <i class="fa fa-search"></i>
                 <input type="text" placeholder="ค้นหาจากชื่อเมนู, วัตถุดิบ" name="search">
@@ -93,11 +99,16 @@
             <?php
                 foreach ( json_decode($resultmenu,true) as $rowmenu){
             ?>
-              <a href=" <?php echo '/projectapi/show-food.php?id='. (int)$rowmenu['_id'];?>">
+              <a href=" <?php echo 'show-food.php?id='. (int)$rowmenu['_id'];?>">
                   <div id="wb_element_instance2" class="wb_element hvr-grow menu-box mb-4">
                       <center>
-                          <img class="card-img-left rounded-circle mt-3" src="<?php echo $rowmenu["image"]; ?>" width="250"
-                              height="250" alt="Card image cap">
+                        <?php
+                            if (substr($rowmenu["image"], 0, 4) != "http") {
+                                echo '<img class="card-img-left rounded-circle mt-3" src="image_food/'.$rowmenu["image"].'"  width="250" height="250" alt="Card image cap">';
+                            }else{
+                                echo '<img class="card-img-left rounded-circle mt-3" src="'.$rowmenu["image"].'"  width="250" height="250" alt="Card image cap">';
+                            }
+                        ?>
                       </center>
                       <div class='menu-name'>
                           <h5 class="card-title name-title text-center">

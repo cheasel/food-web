@@ -4,7 +4,7 @@ if (isset($_SESSION['id'])) {
     $session_login_id = $_SESSION['id'];
     $session_login_email = $_SESSION['email'];
     $session_login_username = $_SESSION['username'];
-    $session_status = $_SESSION['status'];
+    $session_login_status = $_SESSION['status'];
 }
 $total_ing = 1;
 ?>
@@ -62,8 +62,17 @@ $total_ing = 1;
         </div>
     </div>-->
     <div id="main-wrapper">
-        <?php include("../function/header-admin.php"); ?>
-        <?php include("../function/list-admin.php"); ?>
+        <?php
+            if($session_login_status == 'Admin'){
+                include("../function/header-admin.php");
+                include("../function/list-admin.php");
+            }elseif($session_login_status == 'User'){
+                include("../function/header-user.php");
+                include("../function/list-user.php");
+            }else{
+                header("Location: ../auth/login.php");
+            }
+        ?>
         <div class="page-wrapper">
             <div class="container-fluid">
                 <div class="row page-titles">
@@ -78,6 +87,7 @@ $total_ing = 1;
                 </div>
                 <form action="addfood-user.php" method="POST" onsubmit="return Validate()" enctype="multipart/form-data" class="form-horizontal form-material" name="form1" runat="server">
                     <input name="iduser" type="hidden" value="<?php echo $session_login_id ?>">
+                    <input name="status" type="hidden" value="<?php echo $session_login_status ?>">
                     <div class="row">
                         <!-- Upload image -->
                         <div class="col-lg-4 col-xlg-3 col-md-5">
@@ -172,8 +182,8 @@ $total_ing = 1;
                                     <div class="form-group col-md-12">
                                         <div id='Process-Form'>
                                             <div>
-                                                <input name="numberProcess" type="text" value=">" disabled="True" class="form-control form-control-line col-md-2"/>
-                                                <input name="process[]" type="text" value="" class="form-control form-control-line col-md-9"/>
+                                                <input name="numberProcess" type="text" value=">" disabled="True" class="form-control form-control-line col-md-1"/>
+                                                <input name="process[]" type="text" value="" class="form-control form-control-line col-md-10"/>
                                             </div>
                                         </div>
                                         <a href="javascript:void(0);" class="add_process" title="Add field"> <button type="button" class="btn btn-danger btn-block"><i class="fa fa-plus-circle" aria-hidden="true"></i></button> </a>
@@ -243,9 +253,6 @@ $total_ing = 1;
     <script src="js/dashboard1.js"></script>
 
     <script>
-        /*var numProcess = 0;
-        var numIngre = 0;
-
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
@@ -262,7 +269,7 @@ $total_ing = 1;
             readURL(this);
         });
 
-        function addIngredient() {
+        /*function addIngredient() {
             numIngre++;
             var Ingre = '';
             var value = '';
@@ -299,7 +306,7 @@ $total_ing = 1;
             var Ingre_wrapper = $('#Ingredient-Form'); //Input field wrapper
             var Process_wrapper = $('#Process-Form'); //Input field wrapper
             
-            var fieldHTML = '<div><input type="text" name="ingredient[]" value="" class="col-md-6 form-control form-control-line"/><input type="text" name="value[]" value="" class="col-md-3 form-control form-control-line"/><input type="text" name="unit[]" value="" class="col-md-2 form-control form-control-line"/><a href="javascript:void(0);" class="remove_ingre col-md-1"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></div>'; //New input field html 
+            var fieldHTML = '<div><input type="text" name="ingredient[]" placeholder="Carrot" value="" class="col-md-6 form-control form-control-line"/><input type="text" name="value[]" placeholder="100" value="" class="col-md-3 form-control form-control-line"/><input type="text" name="unit[]" placeholder="กรัม" value="" class="col-md-2 form-control form-control-line"/><a href="javascript:void(0);" class="remove_ingre col-md-1"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></div>'; //New input field html 
             var fieldHTML2 = '<div><input name="numberProcess" type="text" value=">" disabled="True" class="form-control form-control-line col-md-2"/><input name="process[]" type="text" value="" class="form-control form-control-line col-md-9"/><a href="javascript:void(0);" class="remove_process col-md-1"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></div>'; //New input field html 
             //var x = 1; //Initial field counter is 1
             

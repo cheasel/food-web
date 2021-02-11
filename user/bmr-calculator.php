@@ -100,7 +100,7 @@ if (isset($_SESSION['id'])) {
                         <div class="col-lg-7">
                             <div class="card">
                                 <!-- Tab panes -->
-                                <div class="card-body">
+                                <div class="card-body" style="min-height: 470px">
                                     <div class="form-group">
                                         <label class="col-md-12">gender</label>
                                         <div class="col-md-12">
@@ -144,7 +144,7 @@ if (isset($_SESSION['id'])) {
                             </div>
                         </div>
                         <div class="col-lg-5">
-                            <div class="card">
+                            <div class="card" style="min-height: 470px">
                                 <div class="card-body">
                                     <center>
                                         <div class="m-b-30 no-block">

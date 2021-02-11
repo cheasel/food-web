@@ -23,10 +23,10 @@
                         <i class="fa fa-medkit" aria-hidden="true"></i><span class="hide-menu">Medical problems</span>
                     </a>
                 </li>-->
-                <li> <a class="waves-effect waves-dark" href="../food-allergies.php" aria-expanded="false">
+                <!--<li> <a class="waves-effect waves-dark" href="../food-allergies.php" aria-expanded="false">
                         <i class="fa fa-ambulance" aria-hidden="true"></i><span class="hide-menu">Food allergies</span>
                     </a>
-                </li>
+                </li>-->
             </ul>
         </nav>
     </div>

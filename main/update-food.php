@@ -10,7 +10,7 @@ $serve = $_POST['serve'];
 
 if( $_FILES['news_filename']['name'] != null){
     $image_ext = pathinfo(basename($_FILES['news_filename']['name']), PATHINFO_EXTENSION);
-    $news_image_name = 'prod_'.uniqid().".".$image_ext;
+    $news_image_name = 'recipe_'.uniqid().".".$image_ext;
     $image_path = "../image_food/";
     $image_upload_path = $image_path.$news_image_name;
     $success = move_uploaded_file($_FILES['news_filename']['tmp_name'],$image_upload_path);
@@ -36,7 +36,7 @@ $data_array =  array(
     "description" => $description,
     "ingredients" => $ingredients,
     "preparations" => $process,
-    "image" => $image_upload_path,
+    "image" => $news_image_name,
     "userid" => $iduser
 );
 

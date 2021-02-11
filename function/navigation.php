@@ -1,4 +1,4 @@
-<nav class="navbar navbar-light static-top">
+<nav class="navbar navbar-light bg-light static-top">
     <div class="top-nav">
         <ul>
             <li>
@@ -35,7 +35,7 @@
                 <a href='index.php'> สูตรอาหาร </a>
             </li>
             <li>
-                <a href='/projectapi/api-doc.php'> API </a>  
+                <a href='api-doc.php'> API </a>  
             </li>
         </ul> 
     </div>

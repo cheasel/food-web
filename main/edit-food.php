@@ -101,7 +101,14 @@
                                 <div class="card-body">
                                     <center class="m-t-30">
                                         <label for="news_filename">
-                                            <img src="<?php echo $resultmenu[0]['image'] ?>" id="blah" alt="your image" class="img-circle" width="250" height="250" />
+                                            <?php
+                                                if (substr($resultmenu[0]["image"], 0, 4) != "http") {
+                                                    echo '<img class="card-img-left" src="../image_food/'.$resultmenu[0]["image"].'"  width="250" height="250" alt="Card image cap">';
+                                                }else{
+                                                    echo '<img class="card-img-left" src="'.$resultmenu[0]["image"].'"  width="250" height="250" alt="Card image cap">';
+                                                }
+                                            ?>
+                                            <!--<img src="../image_food/<?php //echo $resultmenu[0]['image'] ?>" id="blah" alt="your image" class="img-circle" width="250" height="250" />-->
                                             <div class="btn btn-block btn-success mt-3">Upload image. <i class="fas fa-upload" aria-hidden="true"></i></div>
                                         </label>
                                         <input id="news_filename" name="news_filename" type="file" style="display: none;" />

@@ -69,7 +69,6 @@ if (isset($_SESSION['id'])) {
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -137,7 +136,6 @@ if (isset($_SESSION['id'])) {
                     </div>
                 </div>
                 <div class="row">
-
                     <!-- Column -->
                     <div class="col-lg-12">
                         <div class="card">
@@ -145,35 +143,35 @@ if (isset($_SESSION['id'])) {
                                 <center>
                                     <div class="row">
                                         <!-- user -->
-                                        <din class="col">
+                                        <div class="col">
                                             <i class="fa fa-user text-info" style="font-size: 5rem;" aria-hidden="true"></i>
                                             <h5 class=" card-title mt-2">User</h5>
                                             <h5 class=" card-title mt-2"><?php echo $usercount ?></h5>
-                                        </din>
+                                        </div>
                                         <!-- Food -->
-                                        <din class="col">
+                                        <div class="col">
                                             <i class="fa fa-cutlery text-primary" style="font-size: 5rem;" aria-hidden="true"></i>
                                             <h5 class=" card-title mt-2">All Receipe</h5>
                                             <h5 class=" card-title mt-2"><?php echo $menucount ?></h5>
-                                        </din>
+                                        </div>
                                         <!-- BMR Calculator -->
                                         <!--<din class="col">
                                             <i class="fa fa-calculator text-success" style="font-size: 5rem;" aria-hidden="true"></i>
                                             <h5 class=" card-title mt-2">BMR calulator</h5>
-                                            <h5 class=" card-title mt-2"><?php echo $caloriescount ?></h5>
+                                            <h5 class=" card-title mt-2"><?php #echo $caloriescount ?></h5>
                                         </din>-->
                                         <!-- Medical problems -->
                                         <!--<din class="col">
                                             <i class="fa fa-medkit text-danger" style="font-size: 5rem;" aria-hidden="true"></i>
                                             <h5 class=" card-title mt-2">Medical problems</h5>
-                                            <h5 class=" card-title mt-2"><?php echo $medical_problemscount ?></h5>
+                                            <h5 class=" card-title mt-2"><?php #echo $medical_problemscount ?></h5>
                                         </din>-->
                                         <!-- Food allergies -->
-                                        <din class="col">
+                                        <!--<din class="col">
                                             <i class="fa fa-ambulance text-warning" style="font-size: 5rem;" aria-hidden="true"></i>
                                             <h5 class=" card-title mt-2">Food allergies</h5>
-                                            <h5 class=" card-title mt-2"><?php echo $food_allergiescount ?></h5>
-                                        </din>
+                                            <h5 class=" card-title mt-2"><?php #echo $food_allergiescount ?></h5>
+                                        </din>-->
                                     </div>
                                 </center>
                             </div>
@@ -185,7 +183,7 @@ if (isset($_SESSION['id'])) {
                     <div class="col-lg-6 col-md-12">
                         <div class="card card-body mailbox">
                             <h5 class="card-title">Latest Update User</h5>
-                            <div class="message-center ps ps--theme_default ps--active-y" style="height: 490px" data-ps-id="a045fe3c-cb6e-028e-3a70-8d6ff0d7f6bd">
+                            <div class="message-center ps ps--theme_default ps--active-y" style="min-height: 350px" data-ps-id="a045fe3c-cb6e-028e-3a70-8d6ff0d7f6bd">
                                 <div class="table-responsive m-t-20 no-wrap">
                                     <table class="table vm no-th-brd pro-of-month">
                                         <thead>
@@ -202,7 +200,7 @@ if (isset($_SESSION['id'])) {
                                                         <td colspan="2"><?php echo $data["username"]; ?></td>
                                                         <td id="timeupdate"><?php 
                                                         echo date('m/d/Y H:i:s', (int) ((int)$data["update"]['$date'] / 1000));
-                                                         ?></td>
+                                                        ?></td>
                                                     </tr>
                                             <?php    }
                                             } ?>
@@ -215,20 +213,20 @@ if (isset($_SESSION['id'])) {
                     <!-- Column -->
                     <!-- Column -->
                     <div class="col-lg-6 col-md-12">
-                        <div class="card card-body mailbox" style="width: 100%">
+                        <div class="card card-body mailbox">
                             <h5 class="card-title">Latest Update Food</h5>
-                            <div class="message-center ps ps--theme_default ps--active-y" style="height: 490px" data-ps-id="a045fe3c-cb6e-028e-3a70-8d6ff0d7f6bd">
-                                <div class="table-responsive m-t-20 no-wrap">
-                                    <table class="table vm no-th-brd pro-of-month">
+                            <div class="message-center ps ps--theme_default ps--active-y" style="min-height: 350px; width:100%;" data-ps-id="a045fe3c-cb6e-028e-3a70-8d6ff0d7f6bd">
+                                <div class="table-responsive m-t-20 no-wrap" style="width: 100%">
+                                    <table class="table vm no-th-brd pro-of-month" style="width: 100%">
                                         <thead>
                                             <tr>
                                                 <th class="col-8">Food Name</th>
-                                                <th class="col-4">Last update</th>
+                                                <th class="col-4">Last Update</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-                                            foreach($menudata as $data){?>
+                                            foreach( $menudata as $data ) {?>
                                                 <tr>
                                                     <td>
                                                         <?php echo $data["title"]; ?>
@@ -249,7 +247,6 @@ if (isset($_SESSION['id'])) {
                         </div>
                     </div>
                     <!-- Column -->
-
                 </div>
                 <!--<div class="row">
                     <div class="col-lg-6 col-md-12">
@@ -317,36 +314,34 @@ if (isset($_SESSION['id'])) {
                     <!-- Column -->
 
                 <!--</div> -->
-                <div class="row">
-                    <!-- Column -->
+                <!--<div class="row">
                     <div class="col-lg-6 col-md-12">
                         <div class="card card-body mailbox">
                             <h5 class="card-title">Latest Update Food allergies</h5>
-                            <div class="message-center ps ps--theme_default ps--active-y" style="height: 490px" data-ps-id="a045fe3c-cb6e-028e-3a70-8d6ff0d7f6bd">
+                            <div class="message-center ps ps--theme_default ps--active-y" style="min-height: 350px" data-ps-id="a045fe3c-cb6e-028e-3a70-8d6ff0d7f6bd">
                                 <div class="table-responsive m-t-20 no-wrap">
                                     <table class="table vm no-th-brd pro-of-month">
                                         <thead>
                                             <tr>
                                                 <th class="col-8" colspan="2">Food allergies</th>
-                                                <!--<th class="col-4">time update</th>-->
+                                                <th class="col-4">time update</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-                                            foreach($userdata[0]['food_allergy'] as $data){ ?>
+                                            #foreach($userdata[0]['food_allergy'] as $data){ ?>
                                                 <tr>
                                                     <td colspan="2">
-                                                        <h6><?php echo $data; ?></h6>
+                                                        <h6><?php #echo $data; ?></h6>
                                                     </td>
                                                 </tr>
-                                            <?php } ?>
+                                            <?php #} ?>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- Column -->
+                    </div>-->
                 </div>
             </div>
             <footer class="footer" style="padding-top:1rem !important;padding-bottom:1rem !important">
